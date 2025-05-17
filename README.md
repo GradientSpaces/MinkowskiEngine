@@ -41,6 +41,12 @@ cd MinkowskiEngine
 python setup.py install
 ```
 
+Confirm successful installation and cuda is available
+```
+python -c "import torch; import torch_scatter; import MinkowskiEngine; print(torch.__version__); print(
+torch.version.cuda)"
+```
+
 
 ### Additional Resources for Problem Solving
 First check the environment
