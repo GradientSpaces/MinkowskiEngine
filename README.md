@@ -6,6 +6,65 @@
 
 # Minkowski Engine
 
+## Gradient Spaces Modified Setup 
+1. Modify c++ shared pointer definition in definition in `/usr/include/c++/11/bits/shared_ptr_base.h`
+Replace both instances of:
+```
+auto __raw = __to_address(__r.get())
+```
+With:
+```
+auto __raw = std::__to_address(__r.get())
+```
+
+2. Python Environment 
+```bash
+conda create -n MinkCUDA12 python=3.10
+conda activate MinkCUDA12
+
+pip install --upgrade pip
+pip install --upgrade setuptools
+
+# use version for your cuda in this example is cuda 12.6 
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
+pip install torch-scatter -f https://data.pyg.org/whl/torch-2.7.0+cu126.html
+
+pip install --upgrade numpy
+pip install torch ninja
+sudo apt install build-essential python3-dev libopenblas-dev
+
+git clone git@github.com:GradientSpaces/MinkowskiEngine.git
+cd MinkowskiEngine
+python setup.py install
+```
+
+
+### Additional Resources for Problem Solving
+First check the environment
+```bash
+python -c "import sys; import torch; print('Python version:', sys.version); print('Torch version:', torch.__version__); print('Torch CUDA version:', torch.version.cuda); print('CUDA available:', torch.cuda.is_available());" && gcc --version | head -n 1 | cut -d' ' -f3
+```
+Example Output 
+```bash
+Python version: 3.10.16 (main, Dec 11 2024, 16:24:50) [GCC 11.2.0]
+Torch version: 2.7.0+cu126
+Torch CUDA version: 12.6
+CUDA available: True
+11.4.0-1ubuntu1~22.04
+
+```
+
+
+
+Fix Minkowski for Cuda 12.0+ originally referenced [here](https://github.com/Julie-tang00/Common-envs-issues/blob/main/Cuda12-MinkowskiEngine) and [here](https://github.com/NVIDIA/MinkowskiEngine/issues/543)
+
+If there are additional errors consider modifying [setup.py](https://github.com/NVIDIA/MinkowskiEngine/issues/614#issuecomment-2828786961)
+
+
+
+## Original README
+
+
 [![PyPI Version][pypi-image]][pypi-url] [![pypi monthly download][pypi-download]][pypi-url] [![slack chat][slack-badge]][slack-url]
 
 The Minkowski Engine is an auto-differentiation library for sparse tensors. It supports all standard neural network layers such as convolution, pooling, unpooling, and broadcasting operations for sparse tensors. For more information, please visit [the documentation page](http://nvidia.github.io/MinkowskiEngine/overview.html).
