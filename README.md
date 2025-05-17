@@ -19,15 +19,18 @@ auto __raw = std::__to_address(__r.get())
 
 2. Python Environment 
 ```bash
+
 conda create -n MinkCUDA12 python=3.10
 conda activate MinkCUDA12
 
 pip install --upgrade pip
 pip install --upgrade setuptools
 
-# use version for your cuda in this example is cuda 12.6 
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
-pip install torch-scatter -f https://data.pyg.org/whl/torch-2.7.0+cu126.html
+# use version for your cuda, this example is cuda 12.6 with torch 2.6
+pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cu126
+
+# optional 
+pip install torch-scatter -f https://data.pyg.org/whl/torch-2.6.0+cu126.html
 
 pip install --upgrade numpy
 pip install torch ninja
